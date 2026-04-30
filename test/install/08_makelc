@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+makelc \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits" \
+  Lightcurve=${OUTDIR}/${STEM}.lc \
+  length=${EXP} \
+  dt=1.0 \
+  clobber=yes chatter=0 \
+  || exit 1

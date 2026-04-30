@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+sixtesim \
+  Prefix="${OUTDIR}/${STEM}_" \
+  EvtFile="evt.fits" \
+  XMLFile=${XML} \
+  Background=yes \
+  Simput=${OUTDIR}/dummy.simput \
+  Exposure=${EXP} \
+  RA=${RA} Dec=${DEC} \
+  clobber=yes chatter=0 \
+  || exit 1

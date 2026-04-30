@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Test script to verify a recent version of simput is available
+
+SIMPUT=$(which simputversion)
+
+# have simput?
+if [ -z "${SIMPUT}" ] ; then
+  echo "***error: No simput found in \$PATH!" >&2
+  exit 1
+fi
+
+VERSION=$("${SIMPUT}")
+
+set -- ${VERSION}
+VERSION="$3"
+IFS='.' read -r major minor patch <<< "${VERSION}"
+
+IFS='.' read -r tmajor tminor tpatch <<< "${SIMPUT_VERSION}"
+
+# have valid version?
+if [ "$major" -lt "$tmajor" ] || [ "$minor" -lt "$tminor" ] || [ "$patch" -lt "$tpatch" ]; then
+  echo "***error: simput version '${VERSION}' is too old (must be at least ${SIIMPUT_VERSION})!" >&2
+  exit 1
+fi

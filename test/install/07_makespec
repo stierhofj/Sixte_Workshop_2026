@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+makespec \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits" \
+  Spectrum="${OUTDIR}/${STEM}_spec.pha" \
+  RSPPath="${INSTRUMENT_PATH}" \
+  usepha=true \
+  clobber=yes chatter=0 \
+  || exit 1

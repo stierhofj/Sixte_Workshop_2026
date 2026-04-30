@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Check existance of xml files
+SIXTE_INSTRUMENTS=${SIXTE_INSTRUMENTS:-"${SIXTE}/share/sixte/instruments}"}
+
+FILELIST="fd_wfi_ff_df35mm_thick_filter.xml \
+fd_wfi_ff_df35mm.xml \
+ld_wfi_ff_all_chips.xml \
+ld_wfi_ff_chip0.xml \
+ld_wfi_ff_chip1.xml \
+ld_wfi_ff_chip2.xml \
+ld_wfi_ff_chip3.xml \
+ld_wfi_ff_large.xml \
+ld_wfi_w128.xml \
+ld_wfi_w256.xml"
+
+for f in ${FILELIST} ; do
+  ff="${SIXTE_INSTRUMENTS}/athena-wfi/wfi_w_filter/${f}"
+  # have instrument file?
+  if [ ! -f "${ff}" ] ; then
+    echo "***error: No file '${ff}', but should be there!" >&2
+    exit 1
+  fi
+done
+
+FILELIST="fd_wfi_ff_df35mm.xml \
+ld_wfi_ff_all_chips.xml \
+ld_wfi_ff_chip0.xml \
+ld_wfi_ff_chip1.xml \
+ld_wfi_ff_chip2.xml \
+ld_wfi_ff_chip3.xml \
+ld_wfi_ff_large.xml \
+ld_wfi_w128.xml \
+ld_wfi_w256.xml"
+
+for f in ${FILELIST} ; do
+  ff="${SIXTE_INSTRUMENTS}/athena-wfi/wfi_wo_filter/${f}"
+  # have instrument file?
+  if [ ! -f "${ff}" ] ; then
+    echo "***error: No file '${ff}', but should be there!" >&2
+    exit 1
+  fi
+done
+
+FILELIST="athena_psf_defoc_20231211.fits \
+athena_psf_hew9_20231211.fits \
+athena_vig_13rows_20231211.fits \
+athena_wfi_pha2pi_v20230609.fits \
+athena_wfi_pirmf_v20230609.rmf \
+athena_wfi_sixte_13rows_w_filter_FD_v20250919.arf \
+athena_wfi_sixte_13rows_w_filter_LDA_v20250919.arf \
+athena_wfi_sixte_13rows_wo_filter_FD_v20250919.arf \
+athena_wfi_sixte_13rows_wo_filter_LDA_v20250919.arf \
+athena_wfi_sixte_13rows_w_thick_filter_FD_v20250919.arf \
+athena_wfi_sixte_v20230523.rmf \
+sixte_wfi_particle_bkg_20230602_nxb8.pha"
+
+for f in ${FILELIST} ; do
+  ff="${SIXTE_INSTRUMENTS}/athena-wfi/calibration_files/${f}"
+  # have instrument file?
+  if [ ! -f "${ff}" ] ; then
+    echo "***error: No file '${ff}', but should be there!" >&2
+    exit 1
+  fi
+done

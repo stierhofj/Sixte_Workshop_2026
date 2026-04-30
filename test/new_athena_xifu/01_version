@@ -1,0 +1,23 @@
+#!/bin/bash
+
+TARGETVERSION='1.10.1'
+
+# Test if Athena XIFU file is available
+SIXTE_INSTRUMENTS="${SIXTE_INSTRUMENTS:-${SIXTE}/share/sixte/instruments}"
+FILE="${SIXTE_INSTRUMENTS}/new-athena-xifu.version"
+
+# have version file?
+if [ ! -f "${FILE}" ] ; then
+  echo "***error: No version file for NewAthena/XIFU found!" >&2
+  exit 1
+fi
+
+VERSION=$(cat "${FILE}")
+IFS='.' read -r major minor patch <<< "${VERSION}"
+
+IFS='.' read -r tmajor tminor tpatch <<< "${TARGETVERSION}"
+
+if [ ${major} -lt ${tmajor} ] || [ ${minor} -lt ${tminor} ] || [ ${patch} -lt ${tpatch} ] ; then
+  echo "***error: NewAthena/XIFU version files are too old ('${VERSION}'). Required is at least version '${TARGETVERSION}'." >&2
+  exit 1
+fi

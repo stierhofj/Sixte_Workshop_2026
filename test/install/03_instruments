@@ -1,0 +1,22 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Test if there are instrument files in general
+
+SIXTE=$(dirname $(which sixteversion))
+
+# check if SIXTE_INSTRUMENTS is set, otherwise set it to the canonical location
+SIXTE_INSTRUMENTS=${SIXTE_INSTRUMENTS:-"${SIXTE}/share/sixte/instruments"}
+
+SHOPTs=$(shopt -p nullglob)
+shopt -s nullglob
+set -- "${SIXTE_INSTRUMENTS}/"*/*.xml "${SIXTE_INSTRUMENTS}/"*/*/*.xml
+ONE_INSTRUMENT="$1"
+${SHOPTs}
+
+# have any xml files there?
+if [ -z "${ONE_INSTRUMENT}" ] ; then
+  echo "***error: No instrument files found in \$SIXTE_INSTRUMENTS ('${SIXTE_INSTRUMENTS}')! Either none are installed, or \$SIXTE_INSTRUMENTS does not point to the correct path" >&2
+  exit 1
+fi

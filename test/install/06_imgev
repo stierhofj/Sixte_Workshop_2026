@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+imgev \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits" \
+  Image="${OUTDIR}/${STEM}_img.fits" \
+  CoordinateSystem=0 \
+  Projection=TAN \
+  NAXIS1=9 NAXIS2=9 CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${RA} CRVAL2=${DEC} CRPIX1=5.0 CRPIX2=5.0 \
+  CDELT1=-57.29583e-4 CDELT2=57.29583e-4 \
+  clobber=yes chatter=0 \
+  || exit 1

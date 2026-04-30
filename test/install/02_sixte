@@ -1,0 +1,28 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Test if valid sixte version is available
+
+SIXTE=$(which sixteversion)
+
+# have sixte?
+if [ -z "${SIXTE}" ] ; then
+  echo "***error: No sixte found in \$PATH!" >&2
+  exit 1
+fi
+
+VERSION=$("${SIXTE}")
+
+set -- ${VERSION}
+VERSION="$3"
+
+IFS='.' read -r major minor patch <<< "${VERSION}"
+
+IFS='.' read -r tmajor tminor tpatch <<< "${SIXTE_VERSION}"
+
+# have valid version?
+if [ "${major}" -lt "${tmajor}" ] || [ "${minor}" -lt "${tminor}" ] || [ "${patch}" -lt "${tpatch}" ] ; then
+  echo "***error: sixte version '${VERSION}' is to old (must be at least '${SIXTE_VERSION})!'" >&2
+  exit 1
+fi

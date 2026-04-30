@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# run all test scrips
+
+for cmd in ??_* ; do
+  "./${cmd}" || exit 1
+done
+
+echo "Instrument files for Athena/XIFU seem good!"

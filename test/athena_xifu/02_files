@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Check existance of xml files
+SIXTE_INSTRUMENTS=${SIXTE_INSTRUMENTS:-"${SIXTE}/share/sixte/instruments"}
+
+FILELIST="xifu_nofilt_defoc.xml \
+xifu_nofilt_infoc.xml \
+xifu_thickBe_defoc.xml \
+xifu_thickBe_infoc.xml \
+xifu_thickOpt_defoc.xml \
+xifu_thickOpt_infoc.xml \
+xifu_thinBe_defoc.xml \
+xifu_thinBe_infoc.xml \
+xifu_thinOpt_defoc.xml \
+xifu_thinOpt_infoc.xml"
+
+for f in ${FILELIST} ; do
+  ff="${SIXTE_INSTRUMENTS}/athena-xifu/baseline/${f}"
+  # have instrument file?
+  if [ ! -f "${ff}" ] ; then
+    echo "***error: No file '${ff}', but should be there!" >&2
+    exit 1
+  fi
+done
+
+FILELIST="athena_psf_defoc_20240326.fits \
+athena_psf_hew9_20240326.fits \
+athena_vig_13rows_20240326.fits \
+athena_vig_13rows_20240327.fits \
+athena_xifu_13_rows_be_filter_100um.arf \
+athena_xifu_13_rows_be_filter_20um.arf \
+athena_xifu_13_rows_no_filter.arf \
+athena_xifu_13_rows_thick_optical_filter.arf \
+athena_xifu_13_rows_thin_optical_filter.arf \
+athena_xifu_30eV_gaussian.rmf \
+athena_xifu_3d1eV_gaussian.rmf \
+athena_xifu_3d6eV_gaussian.rmf \
+athena_xifu_3eV_gaussian.rmf \
+athena_xifu_4d2eV_gaussian.rmf \
+athena_xifu_4eV_gaussian.rmf \
+athena_xifu_5eV_gaussian.rmf \
+athena_xifu_7eV_gaussian.rmf \
+athena_xifu_nxb_sixte.pha \
+derivative_xt_LPA50x30_20240530.fits \
+mut_ind_xt_LPA50x30_20240530.fits \
+proportional_xt_LPA50x30_20240530.fits \
+thermal_xt_diagonal_20240530.fits \
+thermal_xt_diagonal_time_dep_20240614_sixtesim.fits \
+thermal_xt_nearest_20240530.fits \
+thermal_xt_nearest_time_dep_20240614_sixtesim.fits \
+thermal_xt_second_20240530.fits \
+thermal_xt_second_time_dep_20240614_sixtesim.fits"
+
+for f in ${FILELIST} ; do
+  ff="${SIXTE_INSTRUMENTS}/athena-xifu/instdata/${f}"
+  # have instrument file?
+  if [ ! -f "${ff}" ] ; then
+    echo "***error: No file '${ff}', but should be there!" >&2
+    exit 1
+  fi
+done
