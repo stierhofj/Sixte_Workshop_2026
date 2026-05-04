@@ -7,9 +7,7 @@ simputfile \
   srcFlux="2.8e-13" \
   Emin=2 Emax=10 \
   Nbin=1000 \
-  plFlux="2.8e-8" \
-  plPhoIndex=2.1 \
-  Nh=0.38 \
+  XSPECFile=input/plaw.xcm \
   clobber=yes chatter=0 \
   Simput=${OUTDIR}/dummy.simput \
   || exit 1
