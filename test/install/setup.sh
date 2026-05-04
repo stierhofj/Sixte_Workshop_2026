@@ -20,7 +20,8 @@ RA="0.0"
 DEC="0.0"
 
 # The minimum required simput version
-SIMPUT_VERSION="2.7.3"
+SIMPUT_VERSION="2.8.0"
 
 # The minimum required sixte version
-SIXTE_VERSION="3.3.3"
+SIXTE_VERSION="3.4.0
+"

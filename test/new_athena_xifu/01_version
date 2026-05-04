@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGETVERSION='1.10.1'
+TARGETVERSION='1.11.0'
 
 # Test if Athena XIFU file is available
 SIXTE_INSTRUMENTS="${SIXTE_INSTRUMENTS:-${SIXTE}/share/sixte/instruments}"
