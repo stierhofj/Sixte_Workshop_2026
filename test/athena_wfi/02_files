@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check existance of xml files
-SIXTE_INSTRUMENTS=${SIXTE_INSTRUMENTS:-"${SIXTE}/share/sixte/instruments}"}
+SIXTE_INSTRUMENTS=${SIXTE_INSTRUMENTS:-"${SIXTE}/share/sixte/instruments"}
 
 FILELIST="fd_wfi_ff_df35mm_thick_filter.xml \
 fd_wfi_ff_df35mm.xml \

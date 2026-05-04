@@ -1,5 +1,7 @@
 # Parameters for the test simulation
 
+SIXTE_INSTRUMENTES=${SIXTE_INSTRUMENTS:-${SIXTE}/share/sixte/instruments}
+
 # Location of the test insturment files
 INSTRUMENT_PATH="input"
 XML="${INSTRUMENT_PATH}/dummy.xml"
@@ -23,5 +25,4 @@ DEC="0.0"
 SIMPUT_VERSION="2.8.0"
 
 # The minimum required sixte version
-SIXTE_VERSION="3.4.0
-"
+SIXTE_VERSION="3.4.0"

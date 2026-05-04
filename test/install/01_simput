@@ -4,15 +4,20 @@ source ./setup.sh || exit 1
 
 # Test script to verify a recent version of simput is available
 
-SIMPUT=$(which simputversion)
-
 # have simput?
 if [ -z "${SIMPUT}" ] ; then
-  echo "***error: No simput found in \$PATH!" >&2
+  echo "***error: No simput found in \$SIMPUT!" >&2
   exit 1
 fi
 
-VERSION=$("${SIMPUT}")
+SIMPUTVERSION=$(which simputversion)
+
+if [ -z "${SIMPUTVERSION}" ] ; then
+  echo "***error: No 'simputersion in \$PATH! Did you source the install script?"
+  exit 1
+fi
+
+VERSION=$("${SIMPUTVERSION}")
 
 set -- ${VERSION}
 VERSION="$3"

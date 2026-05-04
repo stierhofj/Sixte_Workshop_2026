@@ -4,15 +4,20 @@ source ./setup.sh || exit 1
 
 # Test if valid sixte version is available
 
-SIXTE=$(which sixteversion)
-
 # have sixte?
 if [ -z "${SIXTE}" ] ; then
-  echo "***error: No sixte found in \$PATH!" >&2
+  echo "***error: No sixte found in \$SIXTE!" >&2
   exit 1
 fi
 
-VERSION=$("${SIXTE}")
+SIXTEVERSION=$(which sixteversion)
+
+if [ -z "${SIXTEVERSION}" ] ; then
+  echo "***error: No 'sixteversion' in \$PATH! Did you source the install script?"
+  exit 1
+fi
+
+VERSION=$("${SIXTEVERSION}")
 
 set -- ${VERSION}
 VERSION="$3"

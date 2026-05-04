@@ -4,8 +4,6 @@ source ./setup.sh || exit 1
 
 # Test if there are instrument files in general
 
-SIXTE=$(dirname $(which sixteversion))
-
 # check if SIXTE_INSTRUMENTS is set, otherwise set it to the canonical location
 SIXTE_INSTRUMENTS=${SIXTE_INSTRUMENTS:-"${SIXTE}/share/sixte/instruments"}
 
