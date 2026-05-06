@@ -12,12 +12,12 @@ DEC="0"
 INSTRUMENT="xifu"
 
 # Output directory, where all generated files will be placed
-OUTDIR="output"
+export OUTDIR="output"
 # make sure it exists
 mkdir -p "${OUTDIR}"
 
 # File stem, all files will start with this string
-STEM="multicell"
+export STEM="multicell"
 
 # Here we set some variables depending on the instrument.
 # If you want to use a different instrument, you can change the
