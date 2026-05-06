@@ -1,0 +1,46 @@
+################################################################################
+# This file shows an example procedure of how to perfom a combined fit for
+# two sources in XSPEC. The example has been written for Resolve.
+#
+# NOTE that you need to copy or softlink the RMF file of Resolve into the ${OUTDIR} directory.
+# On a typical SIXTE installation, this file is found under
+# $SIXTE/share/sixte/instruments/xrism/resolve/rsl_Hp_5eV.rmf
+# This is done automatically when generating the ARFs
+#
+# Do the resulting power law spectral indices now match the input values?
+################################################################################
+
+set outdir $env(OUTDIR)
+set stem $env(STEM)
+
+### load data
+data 1:1 $outdir/${stem}_east.pha 2:2 $outdir/${stem}_west.pha
+
+### load RMFs
+response  1:1 $outdir/rsl_Hp_5eV.rmf 1:2 $outdir/rsl_Hp_5eV.rmf 2:1 $outdir/rsl_Hp_5eV.rmf 2:2 $outdir/rsl_Hp_5eV.rmf
+
+### load specific ARFs
+arf 1:1 $outdir/${stem}_soft_in_east.arf 1:2 $outdir/${stem}_soft_in_west.arf 2:1 $outdir/${stem}_hard_in_east.arf 2:2 $outdir/${stem}_hard_in_west.arf
+
+### Focus on 1.0 - 12.0 keV band
+ignore *:**-1.0 12.0-**
+
+### set models with default parameters
+abund angr
+model  1:soft phabs*powerlaw
+/*
+model  2:hard phabs*powerlaw
+/*
+### Freeze nH
+freeze soft:1
+freeze hard:1
+
+### Carry out fit of Poisson data
+statistic cstat
+fit
+
+### Make xspec plot
+cpd /xs
+setplot energy
+setplot rebin 50 1000
+plot ldata delchi

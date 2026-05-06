@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# add X/Y coordinates for spectral extraction
+radec2xy \
+  EvtFile=${OUTDIR}/${STEM}_combined_evt.fits \
+  Projection=TAN RefRA=${RA_SUR} RefDec=${DEC_SUR}
+
+# example image. You can use this to visualize or generate extraction regions
+imgev \
+  EvtFile=${OUTDIR}/${STEM}_combined_evt.fits Image=${OUTDIR}/${STEM}_combined_img.fits \
+  CoordinateSystem=0 Projection=TAN \
+  NAXIS1=1063 NAXIS2=1063 CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${RA_SUR} CRVAL2=${DEC_SUR} CRPIX1=532 CRPIX2=532 \
+  CDELT1=-6.207043e-04 CDELT2=6.207043e-04 history=true \
+  clobber=yes

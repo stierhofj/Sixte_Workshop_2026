@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# create an image of one chip showing the Lissajous pattern
+
+python chip_image.py

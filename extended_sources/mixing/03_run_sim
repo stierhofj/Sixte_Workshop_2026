@@ -1,0 +1,23 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This runs the simulation - a simple pointed observation.
+#
+# The radec2xy tool is needed to add information used for region filtering
+# to the event file.
+###############################################################################
+
+sixtesim \
+  RA=${RA} Dec=${DEC} \
+  Simput=${OUTDIR}/${STEM}_hard.simput,${OUTDIR}/${STEM}_soft.simput \
+  Exposure=${EXP} \
+  XMLFile=${XML} \
+  Prefix=${OUTDIR}/${STEM}_ \
+  Background=n clobber=y
+
+radec2xy \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits \
+  Projection=TAN \
+  RefRA=${RA} RefDec=${DEC}

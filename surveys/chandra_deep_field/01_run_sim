@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+
+source ./setup.sh || exit 1
+
+################################################################################
+# Simulate a fixed-pointing Athena WFI observation of the CDFS.
+#
+# The two input SIMPUT catalogs are given as a comma-separated list. The all-chip
+# WFI XML produces one event file per chip, which we merge into a single event
+# file for analysis.
+################################################################################
+
+sixtesim \
+  XMLFile=${XML} \
+  RA=${POINTING_RA} Dec=${POINTING_DEC} \
+  Prefix=${OUTDIR}/${STEM}_ EvtFile=evt.fits \
+  Simput=${SIMPUTS} \
+  Exposure=${EXPOSURE} \
+  clobber=yes
+
+ftmerge \
+  ${OUTDIR}/${STEM}_chip0_evt.fits,${OUTDIR}/${STEM}_chip1_evt.fits,${OUTDIR}/${STEM}_chip2_evt.fits,${OUTDIR}/${STEM}_chip3_evt.fits \
+  ${FIXED_COMBINED_EVT} \
+  clobber=yes

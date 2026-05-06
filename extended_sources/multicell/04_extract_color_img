@@ -1,0 +1,50 @@
+#!/bin/bash
+source ./setup.sh || exit 1
+
+###############################################################################
+# This script extracts images of the event files in three color bands.
+#
+# Filtering is achieved by filtering on the SIGNAL column (energy in keV), note
+# that this is very rudimentary.
+# For Resolve, you may want to choose different energy bins, given the gate valve.
+#
+# You could also consider using narrower energy bins!
+# The images are saved in the imgs/ folder.
+###############################################################################
+
+imgev \
+  NAXIS1=151 NAXIS2=151 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=76 CRPIX2=76 \
+  CRVAL1=${RA} CRVAL2=${DEC} \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits[EVENTS][SIGNAL>0.5 && SIGNAL<0.8]" \
+  Image=${OUTDIR}/${STEM}_red.img
+
+imgev \
+  NAXIS1=151 NAXIS2=151 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=76 CRPIX2=76 \
+  CRVAL1=${RA} CRVAL2=${DEC} \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits[EVENTS][SIGNAL>0.8 && SIGNAL<2]" \
+  Image=${OUTDIR}/${STEM}_green.img
+
+imgev \
+  NAXIS1=151 NAXIS2=151 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=76 CRPIX2=76 \
+  CRVAL1=${RA} CRVAL2=${DEC} \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits[EVENTS][SIGNAL>2]" \
+  Image=${OUTDIR}/${STEM}_blue.img
+
+
+# TODO provided that you have ds9 installed, you can visualize the image like this:
+#ds9 -rgb \
+#  -red ${OUTDIR}/${STEM}_red.img \
+#  -green ${OUTDIR}/${STEM}_green.img \
+#  -blue ${OUTDIR}/${STEM}_blue.img \

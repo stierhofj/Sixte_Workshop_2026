@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# run python script for create photon list
+
+# **NOTE**:
+# You do not need to run this script if you do not have SOXS installed -
+# the SIMPUT file has already been generated, though with a short exposure
+# time.
+# If you do have SOXS, feel free to play around with it!
+
+python create_photlist_simput.py
+

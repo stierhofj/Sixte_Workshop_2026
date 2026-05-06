@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Create a dithering pattern using a Lissajous curve
+
+# Sixte provides a simple tool 'attgen_dither' to generate
+# an attitude file with such a curve
+
+attgen_dither \
+  Attitude=${OUTDIR}/lissajous_att.fits \
+  Amplitude=0.1 \
+  SrcRA=${RA} \
+  SrcDec=${DEC} \
+  Exposure=${EXP} \
+  clobber=yes

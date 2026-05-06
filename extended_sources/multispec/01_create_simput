@@ -1,0 +1,25 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+################################################################################
+# This script generates our source.
+# See Section 10.7.1 of the SIXTE manual for more context!
+#
+# NOTE: If you are on the SciServer, you do not need to run this code - the
+# output file is already in your directory. Please don't run it unless you want
+# to make changes to the source, in the interest of saving computing resources.
+################################################################################
+
+simputmultispec \
+    Simput=${OUTDIR}/clusterA2146.simput \
+    XSPECFile=input/phabs_apec.xcm \
+    ImageFile=input/A2146_SXB_russel_coord_cal.fits \
+    ParamFiles="input/A2146_kt_russel_coord_cal.fits;input/A2146_ab_russel_coord_cal.fits" \
+    ParamNames="2;3" \
+    ParamsLogScale="yes;no" \
+    ParamsNumValues="8;8" \
+    Emin=0.5 Emax=10.0 \
+    srcFlux=7.995076796356145e-12 \
+    RA=${RA_SRC} Dec=${DEC_SRC} \
+    Elow=0.2 Eup=12 Estep=0.00025

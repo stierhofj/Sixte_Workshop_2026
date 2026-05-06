@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# runs the python script for this task
+
+python build_images.py ${OUTDIR} ${STEM}

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# Generate a simput file from the data cube
+# See the script itself for its usage and the meaning of the parameters.
+###############################################################################
+
+python simput_from_datcube.py ${OUTDIR}/${STEM}_cube.fits ${OUTDIR}/${STEM}.simput 0.3 8 32e-11

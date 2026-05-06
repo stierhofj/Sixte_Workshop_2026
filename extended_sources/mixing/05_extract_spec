@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This script extracts one spectrum per region - simple enough.
+###############################################################################
+
+for side in east west
+do
+  makespec \
+    EvtFile=${OUTDIR}/${STEM}_evt.fits \
+    RSPPATH=${INSTRUMENT_PATH} \
+    regfile=input/${side}.reg \
+    Spectrum=${OUTDIR}/${STEM}_${side}.pha
+done

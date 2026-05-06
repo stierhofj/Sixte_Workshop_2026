@@ -1,0 +1,45 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This script extracts the ARFs. You need to extract one ARF per region and
+# source (unless you expect a particular source not to contaminate a region...)
+#
+# The ARFs are saved in the $OUTDIR folder
+#
+# Try to visualize the ARFs! For example, compare the on- and off-region ARFs
+# for one particular source.
+#
+# NOTE: In the interest of runtime, the "n_photons" parameter is set fairly low.
+# If you plot the ARFs, you will find that they are a bit "noisy" - this is
+# sampling noise. Setting n_photons to a higher value will improve the sampling,
+# but take that much longer to run.
+# The same goes for "sampling_factor" (though in reverse - lower is "better").
+# For this particular fitting approach (just a simple continuum fit), this is
+# still fine, though.
+#
+# In a real case, it might be a good idea to generate many ARFs in separate jobs
+# on some cluster and then merge them (by averaging the SPECRESP column)
+###############################################################################
+
+for reg in east west
+do
+  for src in soft hard
+  do
+    sixte_arfgen \
+      XMLFile=${XML} \
+      Simput=${OUTDIR}/${STEM}_${src}.simput \
+      regfile=input/${reg}.reg \
+      ARFCorr=${OUTDIR}/${STEM}_${src}_in_${reg}.arf \
+      RA=${RA} Dec=${DEC} \
+      RefRA=${RA} RefDec=${DEC} \
+      sampling_factor=100 n_photons=10000 \
+      Exposure=${EXP}
+  done
+done
+
+# housekeeping for xspec fit
+if [ "${INSTRUMENT}" = "resolve" ]; then
+  ln -s ${INSTRUMENT_PATH}/rsl_Hp_5eV.rmf ${OUTDIR}
+fi

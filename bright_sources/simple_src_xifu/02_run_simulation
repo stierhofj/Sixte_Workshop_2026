@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# The script runs a basic observation of the simple source
+# defined before.
+
+sixtesim \
+  RA=${RA} Dec=${DEC} \
+  EvtFile=${OUTDIR}/${STEM}_base_evt.fits \
+  ImpactList=${OUTDIR}/${STEM}_base_imp.fits \
+  XMLFile=${XML} \
+  Exposure=${EXP} \
+  Simput=${OUTDIR}/base.simput \
+  Background=no \
+  history=y \
+  progressbar=y

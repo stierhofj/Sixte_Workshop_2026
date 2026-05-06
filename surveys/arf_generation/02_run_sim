@@ -1,0 +1,43 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# main simulation analog to the CDFS simulation
+
+# generate attitude
+attgen_dither \
+  Attitude=${OUTDIR}/attitude_lissajous.fits \
+  Amplitude=0.035 \
+  SrcRA=${RA_SUR} \
+  SrcDec=${DEC_SUR} \
+  Exposure=${EXP}
+
+# run simulation
+sixtesim \
+  Attitude=${OUTDIR}/attitude_lissajous.fits \
+  Prefix=${OUTDIR}/${STEM}_ \
+  XMLFile=${XML} \
+  Simput=${OUTDIR}/central.simput,${OUTDIR}/outer.simput,${OUTDIR}/cluster.simput \
+  Exposure=${EXP} \
+  Background=n \
+  clobber=yes
+
+# merge output files
+ftmerge \
+  ${OUTDIR}/${STEM}_chip0_evt.fits,${OUTDIR}/${STEM}_chip1_evt.fits,${OUTDIR}/${STEM}_chip2_evt.fits,${OUTDIR}/${STEM}_chip3_evt.fits \
+  ${OUTDIR}/${STEM}_combined_evt.fits clobber=yes
+
+# add X/Y coordinates for spectral extraction
+radec2xy \
+  EvtFile=${OUTDIR}/${STEM}_combined_evt.fits \
+  Projection=TAN RefRA=${RA_SUR} RefDec=${DEC_SUR}
+
+# example image. You can use this to visualize or generate extraction regions
+imgev \
+  EvtFile=${OUTDIR}/${STEM}_combined_evt.fits \
+  Image=${OUTDIR}/${STEM}_combined_img.fits \
+  CoordinateSystem=0 Projection=TAN \
+  NAXIS1=1063 NAXIS2=1063 CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${RA_SUR} CRVAL2=${DEC_SUR} CRPIX1=532 CRPIX2=532 \
+  CDELT1=-6.207043e-04 CDELT2=6.207043e-04 history=true \
+  clobber=yes

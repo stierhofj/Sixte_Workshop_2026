@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source ./setup.sh
+
+# here, we create three sources - two point and one extended source
+# assign different ids so they can be disentangled
+
+# point source close to center of survey
+simputfile Simput=${OUTDIR}/central.simput \
+  RA=${RA_CEN} Dec=${DEC_CEN} \
+  Src_Id=1 \
+  XSPECFILE=input/mcrab.xcm \
+  Emin=2 Emax=10 srcFlux=2e-12 \
+  Elow=0.1 Eup=15 Nbins=1000 logEgrid=y \
+  clobber=y
+
+# point source at the edge of the survey
+simputfile Simput=${OUTDIR}/outer.simput \
+  RA=${RA_OUT} Dec=${DEC_OUT} \
+  Src_Id=2 \
+  XSPECFILE=input/mcrab.xcm \
+  Emin=2 Emax=10 srcFlux=3e-12 \
+  Elow=0.1 Eup=15 Nbins=1000 logEgrid=y \
+  clobber=y
+
+# extended source, partially overlaps with chip gap
+simputfile Simput=${OUTDIR}/cluster.simput \
+  RA=${RA_EXT} Dec=${DEC_EXT} \
+  Src_Id=3 \
+  XSPECFILE=input/mcrab.xcm \
+  Emin=2 Emax=10 srcFlux=8e-12 \
+  Elow=0.1 Eup=15 Nbins=1000 logEgrid=y \
+  Imagefile=input/beta.fits \
+  clobber=y

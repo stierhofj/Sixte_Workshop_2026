@@ -1,0 +1,18 @@
+#!/bin/bash
+source ./setup.sh || exit 1
+
+###############################################################################
+# This script extracts an image of the event files.
+# The images are saved in the imgs/ folder. You can use this image to
+# visualize the region files (ending with .reg) in this folder.
+###############################################################################
+
+imgev \
+  NAXIS1=151 NAXIS2=151 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=76 CRPIX2=76 \
+  CRVAL1=${RA_PT} CRVAL2=${DEC_PT} \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile="${OUTDIR}/${STEM}_evt.fits[EVENTS]" \
+  Image=${OUTDIR}/${STEM}.img

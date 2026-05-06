@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# allow to shadow commands
+source ../../.shadow.sh
+
+# DRYRUN: When this variable is set to 'y' only print commands
+DRYRUN='y'
+if [ "${DRYRUN}" = "y" ] ; then
+  shadow_cmds
+fi
+
+# Run all exercises (or selected)
+selected=$1
+
+for ex in ??_* ; do
+  if [[ -z "${selected}" ]] || [[ "${ex}" =~ "${selected}" ]] ; then
+    echo "##############################"
+    echo "# ./${ex}"
+    echo "##############################"
+    ./${ex}
+    echo
+  fi
+done

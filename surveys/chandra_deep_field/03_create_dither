@@ -1,0 +1,32 @@
+#!/bin/bash
+set -euo pipefail
+
+source ./setup.sh || exit 1
+
+################################################################################
+# Generate a Lissajous dithering pattern and calculate the corresponding
+# exposure map for the CDFS field.
+################################################################################
+
+attgen_dither \
+  Attitude=${DITHER_ATTITUDE} \
+  Amplitude=${DITHER_AMPLITUDE} \
+  SrcRA=${POINTING_RA} \
+  SrcDec=${POINTING_DEC} \
+  Exposure=${EXPOSURE} \
+  clobber=yes
+
+exposure_map \
+  Vignetting=${VIGNETTING} \
+  Attitude=${DITHER_ATTITUDE} \
+  Exposuremap=${EXPOSURE_MAP} \
+  XMLFile=${XML} \
+  fov_diameter=70 \
+  CoordinateSystem=0 projection_type=TAN \
+  NAXIS1=${NAXIS} NAXIS2=${NAXIS} \
+  CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${POINTING_RA} CRVAL2=${POINTING_DEC} \
+  CRPIX1=${CRPIX} CRPIX2=${CRPIX} \
+  CDELT1=-${CDELT} CDELT2=${CDELT} \
+  TSTART=0 timespan=${EXPOSURE} dt=100. \
+  chatter=3 clobber=true

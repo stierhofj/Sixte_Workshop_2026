@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This runs the simulation - a simple pointed observation.
+###############################################################################
+
+sixtesim \
+  XMLFile=$XML \
+  RA=$RA Dec=$DEC Exposure=$EXP \
+  Simput=${OUTDIR}/${STEM}.simput \
+  Prefix=${OUTDIR}/${STEM}_ \
+  clobber=y

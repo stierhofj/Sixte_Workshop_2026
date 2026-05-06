@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+source ./setup.sh || exit 1
+
+################################################################################
+# Create a sky image from the fixed-pointing Athena WFI event file.
+################################################################################
+
+imgev \
+  EvtFile=${FIXED_COMBINED_EVT} \
+  Image=${OUTDIR}/${STEM}_img.fits \
+  CoordinateSystem=0 Projection=TAN \
+  NAXIS1=${NAXIS} NAXIS2=${NAXIS} \
+  CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${POINTING_RA} CRVAL2=${POINTING_DEC} \
+  CRPIX1=${CRPIX} CRPIX2=${CRPIX} \
+  CDELT1=-${CDELT} CDELT2=${CDELT} \
+  history=true clobber=yes

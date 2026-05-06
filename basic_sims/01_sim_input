@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#############################################
+# The following script will generate a SIMPUT file for a single point source.
+# Make sure to fill the areas marked as "__?___".
+############################################
+
+base=___?____ 
+
+$SIMPUT/bin/simputfile \
+	Simput=${base}.fits \
+	Src_Name=__?___ \
+	RA=__?__  \
+	Dec=__?__ \
+	Emin=__?___ Emax=__?___ \
+	srcFlux=__?___ \
+	Elow=__?___ \
+	Eup=__?__ \
+	Nbins=__?___ \
+	logEgrid=__?__ \
+	XSPECFile=${base}.xcm \
+	clobber=yes

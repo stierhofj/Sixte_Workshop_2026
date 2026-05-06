@@ -1,0 +1,42 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This script extracts images of the event files - one for all photons, plus
+# two images which contain the photons of only one source (which is not
+# something that's possible in real life, of course!).
+#
+# The images are saved in the ${OUTDIR} folder. You can use this image to
+# visualize the region files (ending with .reg) in this folder.
+###############################################################################
+
+imgev \
+  NAXIS1=101 NAXIS2=101 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=51 CRPIX2=51 \
+  CRVAL1=${RA} CRVAL2=${DEC} \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits[EVENTS] \
+  Image=${OUTDIR}/${STEM}_whole.img
+
+imgev \
+  NAXIS1=101 NAXIS2=101 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=51 CRPIX2=51 \
+  CRVAL1=$RA CRVAL2=$DEC \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits[EVENTS][SRC_ID==1] \
+  Image=${OUTDIR}/${STEM}_soft.img
+
+imgev \
+  NAXIS1=101 NAXIS2=101 \
+  CUNIT1=deg CUNIT2=deg \
+  CDELT1=-0.000495 CDELT2=0.000495 \
+  CRPIX1=51 CRPIX2=51 \
+  CRVAL1=$RA CRVAL2=$DEC \
+  Projection=TAN CoordinateSystem=0 \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits[EVENTS][SRC_ID==2] \
+  Image=${OUTDIR}/${STEM}_hard.img

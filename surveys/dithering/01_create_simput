@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# point source at center of detector
+simputfile Simput=${OUTDIR}/pointsrc.simput \
+  RA=${RA} Dec=${DEC} \
+  srcFlux=1e-12 \
+  XSPECFile=input/plaw.xcm \
+  logEgrid=yes \
+  Emin=2 Emax=10 \
+  Nbins=1000 \
+  clobber=y

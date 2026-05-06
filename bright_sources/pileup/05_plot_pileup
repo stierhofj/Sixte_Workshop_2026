@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+python plot_pileup.py

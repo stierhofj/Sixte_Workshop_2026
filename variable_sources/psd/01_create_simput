@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This call to simputfile is relatively standard, but adds several parameters
+# defining a power spectral density consisting of two Lorentzian components.
+###############################################################################
+
+simputfile \
+  Simput=${OUTDIR}/${STEM}.simput \
+  RA=$RA Dec=$DEC \
+  srcFlux=2e-11 Emin=2 Emax=10 \
+  Elow=0.1 Eup=15 Nbins=1000 logEgrid=y \
+  XSPECFile=./input/mcrab.xcm \
+  LFQ=0.5 LFrms=1 \
+  Q1f=0.1 Q1Q=3 Q1rms=0.1 \
+  clobber=y

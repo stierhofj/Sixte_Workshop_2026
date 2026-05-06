@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+################################################################################
+# Extract two spectra, one per region
+#
+# Fit the output spectra! Are they any different?
+################################################################################
+
+# This script uses the following variables:
+#   OUTDIR          : specifies output directory
+#   STEM            : beginning of name of output files
+#   INSTRUMENT_PATH : path to specific instrument files
+
+# Loop over two regions 'core' and 'edge'
+for reg in core edge ; do
+  makespec \
+    EvtFile=${OUTDIR}/${STEM}_evt.fits \
+    Spectrum=${OUTDIR}/${STEM}_${reg}.pha \
+    regfile=input/${reg}.reg \
+    RSPPath=${INSTRUMENT_PATH} \
+    clobber=yes
+done

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+################################################################################
+# Get data for the multicell and multispec examples
+################################################################################
+
+if [ ! -f input/phabs_apec.xcm ] ; then
+  # fetch data and unpack
+  wget https://www.sternwarte.uni-erlangen.de/~sixte/downloads/X-IFU_clusters_tutorial.tgz
+  tar -xzvf X-IFU_clusters_tutorial.tgz
+
+  # move relevant files to input folder
+  mv X-IFU_clusters_tutorial/xifu_point_source.xcm input/phabs_apec.xcm
+  mv X-IFU_clusters_tutorial/A2146_*.fits input/
+
+  # also move the files for multicell  
+  mv X-IFU_clusters_tutorial/wabs_vapec_cosmo.xcm ../multicell/input/
+  mv X-IFU_clusters_tutorial/xifu_3D_grid.fits../multicell/ input/
+
+  # cleanup
+  rm -rf X-IFU_clusters_tutorial X-IFU_clusters_tutorial.tgz
+fi
+

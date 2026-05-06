@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+################################################################################
+# This file builds a SIMPUT using simputmulticell - see also the SIXTE manual,
+# section 10.7.1
+#
+# After the file is generated, examine it. Compare the number of sources in the
+# catalog with the number of spectra!
+#
+# NOTE: If you are on the SciServer, you do not need to run this code - the
+# output file is already in your directory. Please don't run it unless you want
+# to make changes to the source, in the interest of saving computing resources.
+################################################################################
+
+simputmulticell \
+    ParamFile=input/xifu_3D_grid.fits \
+    ParamInputNames="T;FE_ABUND" \
+    ParamNames="2;14" \
+    XSPECFile=input/wabs_vapec_cosmo.xcm \
+    InputType=TABLE \
+    ParamsLogScale="no;no" \
+    ParamsNumValues="100;100" \
+    Elow=0.2 Eup=12.0 Estep=0.00025 \
+    Emin=0.2 Emax=12.0 \
+    Simput=${OUTDIR}/cluster_3D.simput

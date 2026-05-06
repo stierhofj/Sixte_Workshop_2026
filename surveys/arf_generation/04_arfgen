@@ -1,0 +1,53 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# run the ARF generation. Some parameters of note:
+# ARFCorr is the corrected ARF file you can use for fitting
+# sampling_factor=10 means we generate test photons every 10 ARF bins
+# n_photons=10000 means we generate that many photons for every bin we test.
+#                 This is a rather low number, but works for this application
+# SourceRA/SourceDec OR Simput are used to define your source
+
+# outer point source
+sixte_arfgen ARFCorr=${OUTDIR}/${STEM}_outer.arf \
+  XMLFile=${XML} \
+  Attitude=${OUTDIR}/attitude_lissajous.fits \
+  TSTART=0 Exposure=${EXP} \
+  Projection=TAN RefRA=${RA_SUR} RefDec=${DEC_SUR} \
+  sampling_factor=10 n_photons=10000 \
+  SourceRA=${RA_OUT} SourceDec=${DEC_OUT} \
+  regfile=input/outer.reg \
+
+
+# central point source
+sixte_arfgen ARFCorr=${OUTDIR}/${STEM}_central.arf \
+  XMLFile=${XML} \
+  Attitude=${OUTDIR}/attitude_lissajous.fits \
+  TSTART=0 Exposure=${EXP} \
+  Projection=TAN RefRA=${RA_SUR} RefDec=${DEC_SUR} \
+  sampling_factor=10 n_photons=10000 \
+  SourceRA=${RA_CEN} SourceDec=${DEC_CEN} \
+  regfile=input/central.reg \
+
+
+# cluster, modeled as point source
+sixte_arfgen ARFCorr=${OUTDIR}/${STEM}_cluster_pt.arf \
+  XMLFile=${XML} \
+  Attitude=${OUTDIR}/attitude_lissajous.fits \
+  TSTART=0 Exposure=${EXP} \
+  Projection=TAN RefRA=${RA_SUR} RefDec=${DEC_SUR} \
+  sampling_factor=10 n_photons=10000 \
+  SourceRA=${RA_EXT} SourceDec=${DEC_EXT} \
+  regfile=input/cluster.reg \
+
+
+# cluster, modeled as extended source
+sixte_arfgen ARFCorr=${OUTDIR}/${STEM}_cluster_ext.arf \
+  XMLFile=${XML} \
+  Attitude=${OUTDIR}/attitude_lissajous.fits \
+  TSTART=0 Exposure=${EXP} \
+  Projection=TAN RefRA=${RA_SUR} RefDec=${DEC_SUR} \
+  sampling_factor=10 n_photons=10000 \
+  Simput=${OUTDIR}/cluster.simput \
+  regfile=input/cluster.reg \

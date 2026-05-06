@@ -1,0 +1,24 @@
+#!/bin/bash
+set -euo pipefail
+
+source ./setup.sh || exit 1
+
+################################################################################
+# Simulate the CDFS again using the Lissajous attitude file.
+#
+# RA and Dec are not supplied here because the attitude file defines the
+# time-dependent pointing.
+################################################################################
+
+sixtesim \
+  XMLFile=${XML} \
+  Attitude=${DITHER_ATTITUDE} \
+  Prefix=${OUTDIR}/${STEM}_dithered_ EvtFile=evt.fits \
+  Simput=${SIMPUTS} \
+  Exposure=${EXPOSURE} \
+  clobber=yes
+
+ftmerge \
+  ${OUTDIR}/${STEM}_dithered_chip0_evt.fits,${OUTDIR}/${STEM}_dithered_chip1_evt.fits,${OUTDIR}/${STEM}_dithered_chip2_evt.fits,${OUTDIR}/${STEM}_dithered_chip3_evt.fits \
+  ${DITHERED_COMBINED_EVT} \
+  clobber=yes

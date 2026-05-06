@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+#############################################
+# The following script will generate a spectrum from the simulated event file.
+############################################
+
+base=mcrab
+
+$SIXTE/bin/makespec \
+	EvtFile=sim_evt_${base}.fits \
+	Spectrum=spec_${base}.pha \
+	EventFilter="(RA>359.95 || RA<0.05) && Dec>-0.05 && Dec<+0.05" \
+	RSPPath=${INSTRUMENT_PATH} \
+	clobber=yes

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+################################################################################
+# create an image of the source, one per detector
+#
+# depending on the instrument used, we use different binning of the sky image
+################################################################################
+
+# This file uses the following variables
+#   OUTDIR : specifies the output directory
+#   STEM   : beginning of name of the output files
+#   NAXIS  : number of pixels in one direction
+#   RA     : right ascension of the reference point
+#   DEC    : declination of the reference point
+#   CRPIX  : pixel value of the reference point
+#   CDELT  : size of one pixel
+
+imgev \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits \
+  Image=${OUTDIR}/${STEM}_img.fits \
+  CoordinateSystem=0 Projection=TAN \
+  NAXIS1=${NAXIS} NAXIS2=${NAXIS} \
+  CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${RA} CRVAL2=${DEC} \
+  CRPIX1=${CRPIX} CRPIX2=${CRPIX} \
+  CDELT1=-${CDELT} CDELT2=${CDELT} \
+  history=true clobber=yes

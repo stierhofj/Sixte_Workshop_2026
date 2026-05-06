@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# This is a very simple script using fstatistic to check if all grades
+# are as they should be
+
+fstatistic ${OUTDIR}/${STEM}_base_evt.fits grading rows=-
+
+fhisto \
+    infile=${OUTDIR}/${STEM}_base_evt.fits \
+    outfile=${OUTDIR}/histo_grading.fits \
+    column=grading \
+    binsz=1 \
+    lowval=1 \
+    clobber=yes 

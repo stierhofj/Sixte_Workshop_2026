@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This call to makelc is relatively standard.
+# Feel free to play around with the binning!
+###############################################################################
+
+makelc \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits \
+  LightCurve=${OUTDIR}/${STEM}_lc.fits \
+  length=$EXP \
+  dt=0.1

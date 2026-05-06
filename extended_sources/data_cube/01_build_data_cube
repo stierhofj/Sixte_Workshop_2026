@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# Here, we simply generate the data cube
+# Feel free to read the build_datcube.py script and modify it!
+###############################################################################
+
+python build_datcube.py ${OUTDIR}/${STEM}_cube.fits

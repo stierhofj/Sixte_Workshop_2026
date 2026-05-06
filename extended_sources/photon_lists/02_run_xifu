@@ -1,0 +1,35 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+################################################################################
+# Here, we run a simple simulation, observing the clusters with X-IFU
+#
+# As the clusters are spaced apart slightly wider than the X-IFU field of view,
+# we generate a dithering Attitude file with the attgen_dither tool.
+# You can also inspect the output, att_dither.fits
+#
+# One issue with photon list SIMPUTs is that you need to avoid samplilng the
+# same photon multiple times. Increase the exposure time (variable 'EXP'), rerun
+# the simulation and check if the output changed!
+#
+# How would you avoid this issue?
+################################################################################
+
+attgen_dither SrcRA=${RA} SrcDec=${DEC} \
+  Exposure=${EXP} \
+  Amplitude=0.05 \
+  Attitude=${OUTDIR}/att_dither.fits \
+  clobber=y
+
+sixtesim Attitude=${OUTDIR}/att_dither.fits \
+  Simput=input/clusters_simput.fits \
+  Prefix=${OUTDIR}/ \
+  Exposure=${EXP} \
+  XMLFile=${XML} \
+  Background=y clobber=y
+
+radec2xy \
+  EvtFile=${OUTDIR}/evt.fits \
+  Projection=TAN \
+  RefRA=${RA} RefDec=${DEC}

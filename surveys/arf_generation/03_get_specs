@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# run makespec
+# The extraction regions are predefined (see the .reg files), but you can modify them
+
+for src in central outer cluster
+do
+  makespec \
+    EvtFile=${OUTDIR}/${STEM}_combined_evt.fits \
+    Spectrum=${OUTDIR}/${src}.pha regfile=input/${src}.reg \
+    RSPPath=${INSTRUMENT_PATH} \
+    clobber=y
+done

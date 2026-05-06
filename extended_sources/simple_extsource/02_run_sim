@@ -1,0 +1,34 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+###############################################################################
+# This runs the simulation - a simple pointed observation.
+#
+# The radec2xy tool is needed to add information used for region filtering
+# to the event file.
+###############################################################################
+
+
+# This script uses the following variables
+#   OUTDIR : specifies output directory
+#   XML    : the instrument xml file used for the simulation
+#   STEM   : specifies the beginning of the name of the output files
+#   RA     : right ascension of the telescope pointing
+#   DEC    : declination of the telescope pointing
+#   EXP    : exposure time of the observation
+
+sixtesim \
+  XMLFile=${XML} \
+  Simput=${OUTDIR}/n132d_flat.simput \
+  Prefix=${OUTDIR}/${STEM}_ \
+  RA=${RA} Dec=${DEC} \
+  Exposure=${EXP} \
+  clobber=y
+
+# radec2xy adds WCS coordinates to an event file
+radec2xy \
+  EvtFile=${OUTDIR}/${STEM}_evt.fits \
+  RefRA=${RA} RefDec=${DEC} \
+  Projection=TAN
+

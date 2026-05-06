@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# run simulation
+sixtesim \
+  Attitude=${OUTDIR}/slew_attitude.fits \
+  Prefix=${OUTDIR}/${STEM}_ \
+  XMLFile=${XML} \
+  Simput=${OUTDIR}/central.simput,${OUTDIR}/outer.simput,${OUTDIR}/cluster.simput \
+  Exposure=${EXP} \
+  Background=n \
+  clobber=yes
+
+# merge output files
+ftmerge \
+  ${OUTDIR}/${STEM}_chip0_evt.fits,${OUTDIR}/${STEM}_chip1_evt.fits,${OUTDIR}/${STEM}_chip2_evt.fits,${OUTDIR}/${STEM}_chip3_evt.fits \
+  ${OUTDIR}/${STEM}_combined_evt.fits clobber=yes

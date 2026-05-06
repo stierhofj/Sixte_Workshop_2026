@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#############################################
+# The following script will generate a light curve by first creating a new event file.
+# Make sure to fill the areas marked as "__?___".
+############################################
+
+base=mcrab_lightcurve
+xmldir=____?_____
+xml=${xmldir}/ld_wfi_ff_large.xml
+
+$SIMPUT/bin/simputfile \
+	Simput=${base}.fits \
+	Src_Name=first \
+	RA=0.0 Dec=0.0 \
+	srcFlux=2.1157e-11 \
+	Elow=0.1 Eup=15 \
+	Nbins=1000 \
+	logEgrid=yes \
+	Emin=2 Emax=10 \
+	MJDREF=55000 \
+	LCFile=input/example_lightcurve.dat \
+	XSPECFile=___?___ \
+	clobber=yes
+
+$SIXTE/bin/sixtesim \
+	XMLFile =${xml} \
+	RA=0.000 Dec=0.000 \
+	Prefix=sim_ \
+	Simput=${base}.fits \
+	EvtFile=evt_${base}.fits \
+	Exposure=1000
+
+$SIXTE/bin/makelc \
+	EvtFile=sim_evt_${base}.fits \
+	Lightcurve=sim_${base}.lc \
+	length=___?___ \
+	dt=___?___

@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+################################################################################
+# Download the CDFS SIMPUT catalogs used in the SIXTE manual.
+################################################################################
+
+mkdir -p input
+
+ARCHIVE="input/CDFS_combined_simput.tgz"
+URL="https://www.sternwarte.uni-erlangen.de/~sixte/simput/CDFS_combined_simput.tgz"
+
+if [ ! -f "input/CDFS_cat_lehmer.fits" ] || [ ! -f "input/CDFS_cat_galaxies.fits" ]; then
+  if [ ! -f "${ARCHIVE}" ]; then
+    wget -O "${ARCHIVE}" "${URL}"
+  fi
+
+  tar -xzvf "${ARCHIVE}" -C input
+fi

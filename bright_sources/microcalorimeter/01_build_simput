@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Create a simple SIMPUT file using the input spectrum
+# We choose a baseline flux of 1 mCrab
+
+simputfile \
+  Simput=${OUTDIR}/${MODEL}_mcrab.simput \
+  XSPECFile=input/${MODEL}.xcm \
+  Elow=0.1 Eup=15 Nbins=149000 \
+  logEgrid=n \
+  Emin=2 Emax=10 srcFlux=2.137e-11 \
+  clobber=y

@@ -1,0 +1,25 @@
+#!/bin/bash
+source ./setup.sh || exit 1
+
+# This script simply extracts source spectra via makespec
+#
+# To mitigate the effects of grading and crosstalk, you can use different filtering
+# expressions in the "EventFilter" keyword - these expressions use the CFITSIO
+# extended filename syntax. Some examples:
+#
+# EventFilter="GRADING==1"       - Accept only events where the GRADING column equals 1 - these are the highest resolution events
+# EventFilter="GRADING>=1"       - Filters out invalid events. As makespec does this by default, this does nothing.
+# EventFilter="abs(E_XT)<0.001"  - Filters out events with a crosstalk shift greater than 1 eV
+#
+# Note that filter expressions can also be combined!
+
+for fluxfac in $FLUXFACTORS
+do
+  makespec \
+    EvtFile=${OUTDIR}/${CONFIG}_${MODEL}_${fluxfac}mcrab.fits \
+    Spectrum=${OUTDIR}/${CONFIG}_${MODEL}_${fluxfac}mcrab.pha \
+    RSPPath=${INSTRUMENT_PATH} \
+    clobber=y \
+    EventFilter="GRADING>=1" # Change me!
+
+done

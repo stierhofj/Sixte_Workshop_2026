@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# This script is the entrace to the bright source study.
+# It creates a simple Crab like simput file with a very low flux.
+# This source can be used to establishe a basline to compare against
+
+# We use the standart value of 1 Crab (in 2 to 10 keV) as 2.4e-8 erg cm-2 s-1
+# The source is rather bright with 1e-2 Crab
+
+simputfile \
+  RA=${RA} Dec=${DEC} \
+  srcFlux=2.4e-10 \
+  XSPECFile=input/plaw.xcm \
+  Simput=${OUTDIR}/base.simput \
+  clobber=yes

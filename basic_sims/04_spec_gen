@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#############################################
+# The following script will generate a spectrum from the simulated event file.
+# Make sure to fill the areas marked as "__?___".
+############################################
+
+xmldir=___?___
+base=___?___
+
+$SIXTE/bin/makespec \
+	EvtFile=sim_evt_${base}.fits \
+	Spectrum=spec_${base}.pha \
+	EventFilter=____?____ \
+	RSPPath=${xmldir} \
+	clobber=yes

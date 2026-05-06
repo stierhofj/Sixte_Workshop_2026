@@ -1,0 +1,24 @@
+#!/bin/bash
+source ./setup.sh || exit 1
+
+# Here, we run simple staring observations of our source at different flux levels
+
+for fluxfac in $FLUXFACTORS
+do
+  # use FITS extended filename syntax to scale the source flux
+  SRCFILE="${OUTDIR}/${MODEL}_mcrab.simput[SRC_CAT][col FLUX=FLUX*${fluxfac},*]"
+
+  # scale exposure time inversely with flux to keep constant number
+  # of photons
+  EXP=$(( ${BASE_EXP}/${fluxfac} ))
+  # Bash can only do integer arithmetic, so use python (uncomment below) for floating point numbers
+  #EXP=$(python -c "print(${BASE_EXP}./${fluxfac})")
+  echo "========= Flux factor $fluxfac, exposure $EXP ========="
+
+   sixtesim \
+     XMLFile=${XML} \
+     Simput="${SRCFILE}" Exposure=${EXP} \
+     EvtFile=${OUTDIR}/${CONFIG}_${MODEL}_${fluxfac}mcrab.fits \
+     doCrosstalk=all Background=n \
+     RA=0.0 Dec=0.0 clobber=y
+done

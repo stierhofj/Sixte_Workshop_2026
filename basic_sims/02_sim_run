@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#############################################
+# The following script will generate a simulated event file.
+# Make sure to fill the areas marked as "__?___".
+############################################
+
+base=___?___
+xmldir=_____?_____
+xml=${xmldir}/ld_wfi_ff_large.xml
+
+$SIXTE/bin/sixtesim \
+	XMLFile =${xml} \
+	RA=__?__ Dec=__?__ \
+	Prefix=sim_ \
+	Simput=${base}.fits \
+	EvtFile=evt_${base}.fits \
+	Exposure=__?___
+

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# --- create light curve of each source, using the extended filename syntax ---
+# makelc EvtFile='sim_twosources_decay_evt.fits[EVENTS][sum(SRC_ID)==1]' [...]
+# makelc EvtFile='sim_twosources_decay_evt.fits[EVENTS][sum(SRC_ID)==2]' [...]
+#  - best put in a shell script
+#  - the 'sum(SRC_ID)==2' is necessary as SRC_ID can be an array, as in an unlikely case
+#    more than 1 photon can contribute to an array; alternatively, a selection with
+#    [RA<?? && RA>?? && Dec<?? && Dec>??] works as well
+#  - make a light curve of length=1300sec and a time resolution of 10sec
+
+# light curve of the decaying source
+makelc \
+    EvtFile=${OUTDIR}/[...] \
+    LightCurve=${OUTDIR}/lc_decay.fits \
+    dt=[...] \
+    length=[...] \
+    clobber=yes 
+
+# light curve of the constant source
+makelc \
+    EvtFile=${OUTDIR}/[...] \
+    [...]  \
+    LightCurve=${OUTDIR}/lc_const.fits \
+    [...]

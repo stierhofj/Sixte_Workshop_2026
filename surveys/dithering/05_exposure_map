@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Calculate a short 5ks snapshot of the attitude at a lower time resolution.
+
+exposure_map \
+  Vignetting=${VIGNET} \
+  Attitude=${OUTDIR}/lissajous_att.fits \
+  Exposuremap=${OUTDIR}/expo_map.fits \
+  XMLFile=${XML} \
+  fov_diameter=70 \
+  CoordinateSystem=0 projection_type=TAN \
+  NAXIS1=1063 NAXIS2=1063 CUNIT1=deg CUNIT2=deg \
+  CRVAL1=${RA} CRVAL2=${DEC} CRPIX1=532 CRPIX2=532 \
+  CDELT1=-6.207043e-04 CDELT2=6.207043e-04 \
+  TSTART=0 timespan=5000.000000 dt=100. \
+  chatter=3 clobber=true

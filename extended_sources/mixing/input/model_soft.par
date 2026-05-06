@@ -1,0 +1,5 @@
+phabs*powerlaw
+ idx  param             tie-to  freeze         value         min         max
+  1  phabs(1).nH            0     0                1           0      100000  10^22
+  2  powerlaw(1).norm       0     0                1           0       1e+10  
+  3  powerlaw(1).PhoIndex   0     0                2.5        -2           9  

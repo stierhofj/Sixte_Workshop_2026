@@ -1,0 +1,36 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# create a simple powerlaw + vpshock model based on Xiao & Chen 2007
+# as well as a Chandra image of the remnant
+#
+# The spectrum is defined via the "XSPECFile" variable, the image via the "ImageFile"
+#
+# Flux (srcFlux) is defined in a given energy band (Emin, Emax)
+# From summing all regions, in the paper, srcFlux=8.297e-11 erg/s/cm^2
+# for the whole remnant, take this times 4, since regions only cover 
+# part of the remnant
+#
+# Elow, Eup and Nbins determine the energies at which the spectrum is evaluated
+# and stored in the SIMPUT file. Here, we go from 0.1 to 19 keV in 1 eV bins
+# This is important for high spectral resolution sources! You can try setting "Nbins"
+# lower and extract a spectrum to see what happens.
+#
+# This script uses the following variables
+#   OUTDIR : specifies the output directory
+#   RA     : right ascension of the source location
+#   DEC    : declination of the source location
+
+simputfile \
+  Simput=${OUTDIR}/n132d_flat.simput \
+  Src_Name=n132d \
+  RA=${RA} Dec=${DEC} \
+  Emin=0.3 Emax=8 \
+  srcFlux=32e-11 \
+  logEgrid=n \
+  Elow=0.1 Eup=19 \
+  Nbins=19900 \
+  XSPECFile=input/plaw_shock.xcm \
+  ImageFile=input/n132d_0.75-7keV.fits \
+  clobber=yes

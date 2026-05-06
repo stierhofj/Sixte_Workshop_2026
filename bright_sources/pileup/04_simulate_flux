@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+while IFS= read -r line ; do
+  OLDIFS=${IFS}
+  IFS=','
+  set -- ${line}
+  IFS=${OLDIFS}
+  exposure=$1
+  approx_counts=$2
+  flux=$3
+
+  echo ${flux}
+  sixtesim \
+    RA=${RA} Dec=${DEC} \
+    EvtFile=${OUTDIR}/${STEM}_flux${flux}_evt.fits \
+    ImpactList=${OUTDIR}/${STEM}_flux${flux}_imp.fits \
+    XMLFile=${XML} \
+    Exposure=${exposure} \
+    Simput=${OUTDIR}/pointsrc_flux${flux}.simput \
+    Background=no \
+    history=y \
+    clobber=y \
+    progressbar=y
+
+done < ${OUTDIR}/exposure_list.dat

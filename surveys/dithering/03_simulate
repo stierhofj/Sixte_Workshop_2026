@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source ./setup.sh || exit 1
+
+# Simulate an observation using the generated attitude file
+
+sixtesim \
+  Prefix=${OUTDIR}/${STEM}_ \
+  EvtFile=evt.fits \
+  XMLFile=${XML} \
+  Attitude=${OUTDIR}/lissajous_att.fits \
+  Simput=${OUTDIR}/pointsrc.simput \
+  Exposure=${EXP} \
+  progressbar=yes \
+  clobber = yes
+
+# merge output files
+ftmerge \
+  ${OUTDIR}/${STEM}_chip0_evt.fits,${OUTDIR}/${STEM}_chip1_evt.fits,${OUTDIR}/${STEM}_chip2_evt.fits,${OUTDIR}/${STEM}_chip3_evt.fits \
+  ${OUTDIR}/combined_evt.fits clobber=yes
