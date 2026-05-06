@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./setup.sh || exit 1
+
 # --- create light curve of each source, using the extended filename syntax ---
 # makelc EvtFile='sim_twosources_decay_evt.fits[EVENTS][sum(SRC_ID)==1]' [...]
 # makelc EvtFile='sim_twosources_decay_evt.fits[EVENTS][sum(SRC_ID)==2]' [...]
