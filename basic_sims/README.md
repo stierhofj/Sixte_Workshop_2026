@@ -10,6 +10,8 @@ This directory contains supplementary scripts for the day 1 workshop presentatio
 
 * [01_sim_input](01_sim_input) : uses the task simputfile to generate astrophysical source input
 
+More details about the SIMPUT file format can be found in this [technical note](https://hea-www.harvard.edu/heasarc/formats/simput-1.1.0.pdf).
+
 2. Running the simulation:
 
 * [02_sim_run](02_sim_run) : uses the task sixtesim to produce an event file, simulating telescope, mirror, and detector model of an instrument
